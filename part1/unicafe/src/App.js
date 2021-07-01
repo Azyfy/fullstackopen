@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const Statistics = ({good, neutral, bad}) => {
 
   let all = good + neutral + bad;
-
+// Refactor your application so that displaying the statistics is extracted into its own Statistics component
   return(
     <>
       <h1> Statistics </h1>
