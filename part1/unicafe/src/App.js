@@ -4,7 +4,7 @@ const Statistics = ({good, neutral, bad}) => {
 
   let all = good + neutral + bad;
 
-  if( all == 0 ) {
+  if( all === 0 ) {
     return <p> No feedback given </p>
   }
 
