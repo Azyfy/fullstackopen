@@ -11,18 +11,29 @@ const Statistics = ({good, neutral, bad}) => {
   return(
     <>
       <h1> Statistics </h1>
-      <Statistic text={"Good"} value={good} />
-      <Statistic text={"Neutral"} value={neutral} />
-      <Statistic text={"Bad"} value={bad} />
-      <Statistic text={"All"} value={all} />
-      <Statistic text={"Average"} value={(good - bad) / all } />
-      <Statistic text={`Positive ${good/all * 100 } %`} />
+      <table>
+        <tbody>
+          <Statistic text={"Good"} value={good} />
+          <Statistic text={"Neutral"} value={neutral} />
+          <Statistic text={"Bad"} value={bad} />
+          <Statistic text={"All"} value={all} />
+          <Statistic text={"Average"} value={(good - bad) / all } />
+          <Statistic text={`Positive`} value={`${good/all * 100 } %`} />
+        </tbody>
+      </table>
     </>
   )
 }
 
 const Statistic = ({text, value}) => {
-  return <p> {text} {value} </p>
+  return(
+    <tr>
+      <td> {text} </td>
+      <td> {value} </td>
+    </tr>
+  )
+  
+ 
 }
 
 const Button = ({handleClick, text}) => {
