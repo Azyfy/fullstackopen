@@ -1,12 +1,16 @@
+import React, { useState } from 'react'
 
-function App() {
+const App = () => {
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        Unicafe
-      </header>
+    <div>
+      code here
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
