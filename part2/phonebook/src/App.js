@@ -1,12 +1,27 @@
+import React, { useState } from 'react'
 
-function App() {
+const App = () => {
+  const [ persons, setPersons ] = useState([
+    { name: 'Arto Hellas' }
+  ]) 
+  const [ newName, setNewName ] = useState('')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        The Phonebook
-      </header>
+    <div>
+      <h2>Phonebook</h2>
+      <div>debug: {newName}</div>
+      <form>
+        <div>
+          name: <input />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+      <h2>Numbers</h2>
+      ...
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
