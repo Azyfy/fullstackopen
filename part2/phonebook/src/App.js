@@ -19,6 +19,11 @@ const App = () => {
   function addToPhonebook(e) {
     e.preventDefault();
 
+   if(persons.some( person =>  person.name === newName )) {
+      alert(`${newName} is already added to phonebook.`)
+     return;
+   }
+
     const personObj = {
       name: newName,
     }
