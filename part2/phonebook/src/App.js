@@ -9,6 +9,9 @@ const Numbers = ({persons, filter}) => {
           <Number key={person.name} name={person.name} number={person.number} />
         )
       }
+      else {
+        return <></>
+      }
     } )
   )
 }
@@ -54,7 +57,6 @@ const App = () => {
     console.log('effect')
     axios.get("http://localhost:3001/persons")
         .then( response => {
-          console.log(response.data)
           setPersons(response.data)
         })
     
@@ -73,7 +75,10 @@ const App = () => {
       number: newNumber,
     }
 
-    setPersons(persons.concat(personObj));
+    axios.post("http://localhost:3001/persons", personObj)
+      .then( response => {
+        setPersons(persons.concat(response.data));
+      })
   }
 
   function handleNameChange(e) {
