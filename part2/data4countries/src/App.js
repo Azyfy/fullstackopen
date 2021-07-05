@@ -16,21 +16,31 @@ const Countries = ({countries, filter}) => {
     return (
       countries.map(country => {
         return (
-          <p key={country.numericCode}> {country.name} </p>
+          <div key={country.numericCode}>
+            {country.name} <Toggle country={country} /> 
+          </div>
+
         )
       })
     )
   }
 
   return (
+    <Country country={countries[0]} />
+  )
+}
+
+const Country = ({country}) => {
+
+  return(
     <>
-      <h2> {countries[0].name } </h2>
-      <p> Capital: {countries[0].capital } </p>
-      <p> Population: {countries[0].population } </p>
+      <h2> {country.name } </h2>
+      <p> Capital: {country.capital } </p>
+      <p> Population: {country.population } </p>
 
       <h5> Languages </h5>
       <ul>
-      { countries[0].languages.map( language => {
+      { country.languages.map( language => {
         return(
           <li key={language.nativeName}>
             {language.name}
@@ -38,7 +48,29 @@ const Countries = ({countries, filter}) => {
         )
       } ) }
       </ul>
-      <img src={countries[0].flag} alt="Flag" style={{width: "35%"}} />
+      <img src={country.flag} alt="Flag" style={{width: "35%"}} />
+    </>
+  )
+}
+
+const Toggle = ({country}) => {
+  
+  const [ showInfo, setShowInfo ] = useState(false);
+
+  function toggleShow() {
+    setShowInfo(!showInfo)
+  }
+
+  return(
+    <>
+    <button onClick={toggleShow}> {showInfo ? "Hide" : "Show" } </button>
+    <div>
+    { showInfo ? (
+      <Country country={country} />
+    ) : (
+      <></>
+    ) }
+    </div>
     </>
   )
 }
@@ -73,8 +105,6 @@ function App() {
   return (
     <div>
         <h2>Data for countries</h2>
-      
-        debug: {filter}
       <div>
         Find countries <input onChange={handleFilter} />
       </div>
