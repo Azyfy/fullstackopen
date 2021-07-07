@@ -36,6 +36,9 @@ const Delete = ({name, id, persons, setPersons, notifications}) => {
         setPersons(filtered);
       }
       })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 
@@ -94,6 +97,9 @@ const App = () => {
         .then( initialPersons => {
           setPersons(initialPersons)
         })
+        .catch(error => {
+          console.log(error)
+        })
     
   }, [])
 
@@ -125,6 +131,10 @@ const App = () => {
           notify(`${updatedPerson.name}'s phone number has been updated.`, "green")
           setPersons(persons.map(person => person.id !== updatedPerson.id ? person : returnedUpdate))
         })
+        .catch(error => {
+          console.log(error)
+          notify(`Information of ${updatedPerson.name} has already been removed from the server.`, "red")
+        })
       
       setNewName("");
       setNewNumber("");
@@ -143,6 +153,9 @@ const App = () => {
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
+      })
+      .catch(error => {
+        console.log(error)
       })
   }
 
