@@ -2,19 +2,16 @@ import React, { useState, useEffect } from 'react'
 import personService from './services/persons'
 
 const Numbers = ({persons, filter, setPersons}) => {
+  const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+  
   return (
-    persons.map( person => {
-      if (person.name.toLowerCase().includes(filter.toLowerCase())) {
+    filteredPersons.map( person => {
         return(
           <div key={person.name}>
             <Number  name={person.name} number={person.number} />
             <Delete name={person.name} id={person.id} persons={persons} setPersons={setPersons} />
           </div>
-        )
-      }
-      else {
-        return <></>
-      }
+        )    
     } )
   )
 }
@@ -88,8 +85,24 @@ const App = () => {
   function addToPhonebook(e) {
     e.preventDefault();
 
+    if(newName === ""){
+      alert("Name is empty.")
+      return;
+    }
+
    if(persons.some( person =>  person.name === newName )) {
-      alert(`${newName} is already added to phonebook.`)
+    if (window.confirm(`${newName} is already added to phonebook. Replace the old number with a new one?`)){
+      const updatedPerson = persons.find( person =>  person.name === newName )
+      updatedPerson.number = newNumber;
+
+      personService.updatePerson(updatedPerson.id, updatedPerson)
+        .then(returnedUpdate => {
+          setPersons(persons.map(person => person.id !== updatedPerson.id ? person : returnedUpdate))
+        })
+      
+      setNewName("");
+      setNewNumber("");
+      }
      return;
    }
 
