@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import personService from './services/persons'
 
-const Numbers = ({persons, filter}) => {
+const Numbers = ({persons, filter, setPersons}) => {
   return (
     persons.map( person => {
       if (person.name.toLowerCase().includes(filter.toLowerCase())) {
         return(
-          <Number key={person.name} name={person.name} number={person.number} />
+          <div key={person.name}>
+            <Number  name={person.name} number={person.number} />
+            <Delete name={person.name} id={person.id} persons={persons} setPersons={setPersons} />
+          </div>
         )
       }
       else {
@@ -19,6 +22,27 @@ const Numbers = ({persons, filter}) => {
 const Number = ({name, number}) => {
   return (
     <p> {name} {number} </p>
+  )
+}
+
+const Delete = ({name, id, persons, setPersons}) => {
+
+  function removePerson() {
+    if (window.confirm(`Do you want to delete ${name} from the phonebook?`)) {
+    personService.removePerson(id)
+      .then(response => {
+        if(response.status === 200) {
+        const filtered = persons.filter( person => {
+          return (person.id !== id)
+        } )
+        setPersons(filtered);
+      }
+      })
+    }
+  }
+
+  return (
+    <button onClick={removePerson} >Delete</button>
   )
 }
 
@@ -102,7 +126,7 @@ const App = () => {
         <PersonForm newName={newName} newNumber={newNumber} submit={addToPhonebook} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
       <div>
-        <Numbers persons={persons} filter={filter} />
+        <Numbers persons={persons} filter={filter}  setPersons={setPersons} />
       </div>
     </div>
   )
