@@ -1,3 +1,4 @@
+const e = require("express")
 const { response } = require("express")
 const express = require("express")
 const app = express()
@@ -63,6 +64,17 @@ app.post("/api/persons", (request, response) => {
     const body = request.body
     const id = Math.floor(Math.random() * 1000000)
     
+    if (!body.name || !body.number) {
+        return response.status(400).json({ 
+          error: 'Name or number missing' 
+        })
+      }
+    else if ( persons.find( person => person.name === body.name)) {
+        return response.status(400).json({ 
+            error: 'Name must be unique' 
+          })
+    }
+
     const person = {
         id,
         name: body.name,
