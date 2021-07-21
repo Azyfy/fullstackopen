@@ -10,7 +10,7 @@ if(process.argv.length < 3) {
     console.log('Please provide the password as an argument: node mongo.js <password>')
     process.exit(1)
 }
-else if(process.argv.length < 3 && process.argv.length < 6){
+else if(process.argv.length > 3 && process.argv.length < 6){
     if(!process.argv[3] || !process.argv[4]) {
     console.log("Person name or person number cant be empty. node mongo.js <password> <person name> <person number>")
     process.exit(1)
