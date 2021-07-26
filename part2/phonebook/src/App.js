@@ -155,7 +155,7 @@ const App = () => {
         setNewNumber("");
       })
       .catch(error => {
-        console.log(error)
+        notify(error.response.data.error, "red")
       })
   }
 
