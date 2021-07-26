@@ -50,21 +50,30 @@ app.get("/api/persons", (request, response) => {
     })
 })
 
-app.get("/info", (request, response) => {
-    response.send(`Phonebook has info for ${persons.length} people 
-     <p> ${new Date()} </p> `)
+app.get("/info", (request, response, next) => {
+
+    Person.countDocuments({}, function (error, count) {
+        if (error){
+            next(error)
+        }else{
+            response.send(`Phonebook has info for ${count} people 
+                        <p> ${new Date()} </p> `)
+        }
+    });
 })
 
-app.get("/api/persons/:id", (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find( person => person.id === id )
+app.get("/api/persons/:id", (request, response, next) => {
 
-    if(person) {
-        response.json(person) 
-    }
-    else {
-        response.status(404).end()
-    }
+    Person.findById(request.params.id)
+            .then( person =>  {
+                if(person) {
+                    response.json(person)
+                }
+                else {
+                    response.status(404).end()
+                }
+            })
+            .catch( error => next(error))
 })
 
 app.delete("/api/persons/:id", (request, response, next) => {
