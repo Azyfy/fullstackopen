@@ -19,7 +19,7 @@ const removePerson = (id) => {
 }
 
 const updatePerson = (id, updatedPerson) => {
-  return  axios.put(`http://localhost:3001/persons/${id}`, updatedPerson).then( response => {
+  return  axios.put(`http://localhost:3001/api/persons/${id}`, updatedPerson).then( response => {
     return response.data
   })
 }
