@@ -76,28 +76,21 @@ app.delete("/api/persons/:id", (request, response) => {
 
 app.post("/api/persons", (request, response) => {
     const body = request.body
-    const id = Math.floor(Math.random() * 1000000)
     
     if (!body.name || !body.number) {
         return response.status(400).json({ 
           error: 'Name or number missing' 
         })
       }
-    else if ( persons.find( person => person.name === body.name)) {
-        return response.status(400).json({ 
-            error: 'Name must be unique' 
-          })
-    }
 
-    const person = {
-        id,
+    const person = new Person ({
         name: body.name,
         number: body.number
-    }
+    })
 
-    persons = persons.concat(person)
-
-    response.json(person)
+    person.save().then( savedPerson =>  {
+        response.json(savedPerson)
+    })
 })
 
 
