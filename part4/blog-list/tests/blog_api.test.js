@@ -40,7 +40,7 @@ test("blogs are returned as json", async () => {
         .get("/api/blogs")
         .expect(200)
         .expect("Content-Type", /application\/json/)
-})
+}, 100000)
 
 test("verifies that the unique identifier property of the blog posts is named id", async () => {
     const response  =  await api
@@ -49,7 +49,7 @@ test("verifies that the unique identifier property of the blog posts is named id
     const blogs = response.body
 
     expect(blogs[0].id).toBeDefined()
-})
+}, 100000)
 
 test("verifies that making an HTTP POST request to the /api/blogs url successfully creates a new blog post", async () => {
     const newBlog  =  {
@@ -74,7 +74,7 @@ test("verifies that making an HTTP POST request to the /api/blogs url successful
     expect(authors).toContain(
         'Pengu'
       )
-})
+}, 100000)
 
 test("verifies that if the likes property is missing from the request, it will default to the value 0", async () => {
     const newBlog  =  {
@@ -93,7 +93,45 @@ test("verifies that if the likes property is missing from the request, it will d
     const blogs = response.body
 
     expect(blogs[2].likes).toBe(0)
-})
+}, 100000)
+
+    const newBlog1  =  {
+        author: 'Pengu testing',
+        url: 'https://fullstackopen.com/en/part4/testing_the_backend',
+        likes: 1,
+    }
+    const newBlog2  =  {
+        title: 'Testing missing',
+        author: 'Pengu',
+        likes: 1,
+    }
+
+    const newBlog3  =  {
+        author: 'Pengu testing alone',
+        likes: 1,
+    }
+
+    test('title missing', async () => {
+        await api
+            .post("/api/blogs")
+            .send(newBlog1)
+            .expect(400)
+    }, 100000)
+
+    test('url missing', async () => {
+        await api
+            .post("/api/blogs")
+            .send(newBlog2)
+            .expect(400)
+      }, 100000)
+    
+      test('title and url missing', async () => {
+        await api
+            .post("/api/blogs")
+            .send(newBlog3)
+            .expect(400)
+      }, 100000)
+
 
 afterAll(() => {
     mongoose.connection.close()
