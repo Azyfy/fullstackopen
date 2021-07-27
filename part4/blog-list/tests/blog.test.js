@@ -75,7 +75,7 @@ describe('total likes', () => {
       })
   })
 
-describe('favourite blog; top likes', () => {
+describe.only('favourite blog; top likes', () => {
 
     test('when list has only one blog', () => {
       const result = listHelper.favoriteBlog(listWithOneBlog)
@@ -84,7 +84,7 @@ describe('favourite blog; top likes', () => {
 
     test('more than one blog, find the one wiht most likes', () => {
         const result = listHelper.favoriteBlog(blogs)
-        expect(result).toEqual( listWithOneBlog[2] )
+        expect(result).toEqual( blogs[2] )
       })
   })
 
@@ -99,4 +99,9 @@ describe('most blogs; author with most blogs', () => {
         const result = listHelper.mostBlogs(blogs)
         expect(result).toEqual( { author: 'Robert C. Martin', blogs: 3 } )
       })
+  })
+
+  describe('most likes; author with most likes', () => {
+
+ 
   })

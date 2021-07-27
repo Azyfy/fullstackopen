@@ -15,10 +15,14 @@ const favoriteBlog = (blogs) => {
     
     const likes = blogs.map( obj => obj.likes  )
     
-    const highestLike = Math.max(likes)
+    const highestLike = Math.max(...likes)
+
+    console.log("likes",likes)
+    console.log("highestLike",highestLike)
 
     const topBlog = blogs.find( blog => blog.likes === highestLike )
 
+    console.log("topBlog",topBlog)
     return topBlog
 }
 
@@ -38,9 +42,16 @@ const mostBlogs = (blogs) => {
     return { author, blogs: max }
 }
 
+
+const mostLikes = (blogs) => {
+
+
+}
+
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
   }
