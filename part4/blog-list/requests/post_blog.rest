@@ -1,0 +1,21 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Pengus blog",
+    "author": "Pengu",
+    "url": "http://localhost:3003/",
+    "likes": 0
+}
+
+###
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Pengus blog 2",
+    "author": "Pengu",
+    "url": "http://localhost:3003/api/blogs",
+    "likes": 0
+}
