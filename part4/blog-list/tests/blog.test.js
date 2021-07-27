@@ -75,7 +75,7 @@ describe('total likes', () => {
       })
   })
 
-describe.only('favourite blog; top likes', () => {
+describe('favourite blog; top likes', () => {
 
     test('when list has only one blog', () => {
       const result = listHelper.favoriteBlog(listWithOneBlog)
@@ -103,5 +103,13 @@ describe('most blogs; author with most blogs', () => {
 
   describe('most likes; author with most likes', () => {
 
- 
+    test('when list has only one blog', () => {
+      const result = listHelper.mostLikes(listWithOneBlog)
+      expect(result).toEqual( { "author": 'Edsger W. Dijkstra', "likes": 5 } )
+    })
+
+    test('more than one blog, find the author with most likes', () => {
+        const result = listHelper.mostLikes(blogs)
+        expect(result).toEqual( { author: "Edsger W. Dijkstra", likes: 17 } )
+      })
   })

@@ -17,12 +17,8 @@ const favoriteBlog = (blogs) => {
     
     const highestLike = Math.max(...likes)
 
-    console.log("likes",likes)
-    console.log("highestLike",highestLike)
-
     const topBlog = blogs.find( blog => blog.likes === highestLike )
 
-    console.log("topBlog",topBlog)
     return topBlog
 }
 
@@ -45,7 +41,18 @@ const mostBlogs = (blogs) => {
 
 const mostLikes = (blogs) => {
 
+    const mostLikes = {}
+    
+    blogs.forEach( blog => {
+        mostLikes[blog.author] =  (mostLikes[blog.author] || 0) + blog.likes
+    } )
 
+    const objValues =  Object.values(mostLikes);
+    const max = Math.max(...objValues);
+    
+    const author = Object.keys(mostLikes).find(key => mostLikes[key] === max)
+
+    return { author, likes: max }
 }
 
 module.exports = {
