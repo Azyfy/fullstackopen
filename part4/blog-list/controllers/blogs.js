@@ -21,8 +21,8 @@ blogsRouter.post('/', async (request, response) => {
       })
     }
   
-    const user = await User.findById(decodedToken.id)
-
+    const user = request.user
+    console.log("USER", user)
     const blog = new Blog ({
       title: body.title,
       author: body.author,
@@ -58,7 +58,7 @@ blogsRouter.delete("/:id", async (request, response) => {
 
   const blog = await Blog.findById(blogID)
 
-  if ( blog.user.toString() === decodedToken.id.toString() ) {
+  if ( blog.user.toString() === request.user.id.toString() ) {
 
     const result = await Blog.findByIdAndRemove(blogID)
 
