@@ -1,8 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlBlbmd1IiwiaWQiOiI2MTAxOGFjZmQzNTgwZjBmMDdmNTgzNzEiLCJpYXQiOjE2Mjc0OTkzMTcsImV4cCI6MTYyNzUwMjkxN30.moDa0wQmgx7sEJH59IfNJylfN8KTaSluSMA_DybS-Ow
 
 {
-    "title": "Pengus blog",
+    "title": "Pengus blog with bearer",
     "author": "Pengu",
     "url": "http://localhost:3003/",
     "likes": 0
