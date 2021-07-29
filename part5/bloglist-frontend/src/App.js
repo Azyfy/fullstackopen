@@ -24,6 +24,9 @@ const App = () => {
       const user = await loginServices.login({
         username, password,
       })
+      window.localStorage.setItem(
+        'loggedUser', JSON.stringify(user)
+        ) 
       setUser(user)
       setUsername("")
       setPassword("")
@@ -57,6 +60,13 @@ const App = () => {
     )
   }
 
+  const logOut = () => {
+    window.localStorage.removeItem(
+      'loggedUser', JSON.stringify(user)
+      ) 
+    setUser(null)
+  }
+
   if (user === null) {
     return loginForm()
   }
@@ -65,7 +75,7 @@ const App = () => {
     <div>
       <div>
         <h2>Blogs</h2>
-        <p> {user.name} logged in </p>
+        <p> {user.name} logged in <button onClick={logOut} >Logout</button> </p> 
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}
