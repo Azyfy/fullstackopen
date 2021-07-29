@@ -85,12 +85,17 @@ const App = () => {
 
       setBlogs( blogs.concat(newBlog) )
 
+      setErrorMessage(`New glog added by the title: ${newBlog.title}`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
+
       setTitle("")
       setAuthor("")
       setURL("")
     }
     catch (exception) {
-      setErrorMessage('Error')
+      setErrorMessage('Blog not created')
       setTimeout(() => {
         setErrorMessage(null)
       }, 3000)
@@ -120,6 +125,7 @@ const App = () => {
       </div>
       <div>
         <h3>Create new</h3>
+        <Notification message={errorMessage} />
         <form onSubmit={handleBlogPost} >
           <div>
             Title:

@@ -1,10 +1,11 @@
 import React from 'react'
 const Notification = ({message}) => (
-  <div style={{color: "red"}}>
-    <p>
-        {message}
-    </p>
-  </div>  
+       <div style={{color: "blue"}}>
+            <p>
+                {message}
+            </p>
+        </div>
+
 )
 
 export default Notification
