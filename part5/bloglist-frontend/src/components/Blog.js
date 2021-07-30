@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import blogServices from "../services/blogs"
+
+
 const Blog = ({blog}) => {
   const [ toggle, setToggle ] = useState(false)
+  const [ likes, setLikes ] = useState(blog.likes)
 
   const blogStyle = {
     paddingTop: 10,
@@ -8,6 +12,28 @@ const Blog = ({blog}) => {
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5
+  }
+
+  const likeBlog =  (blog) => {
+    return (
+      async () => {
+        try {
+
+        const updateBlog = {
+          title: blog.title,
+          author: blog.author,
+          url: blog.url,
+          likes: blog.likes +1,
+        }
+
+        await blogServices.update(updateBlog, blog.id)
+        setLikes(likes + 1)
+        }
+        catch (exception) {
+          console.log(exception)
+        } 
+      }
+    )
   }
 
   const dislplayVisible = { display: toggle ? "" : "none" }
@@ -19,7 +45,7 @@ const Blog = ({blog}) => {
 
     <div style={ dislplayVisible } >
       <p> {blog.url} </p>
-      <p> {blog.likes} <button>Like</button> </p>
+      <p> {likes} <button onClick={ likeBlog(blog) } >Like</button> </p>
       <p> {blog.user.name} </p>
     </div>
   </div>  
