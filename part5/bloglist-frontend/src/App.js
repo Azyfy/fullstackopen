@@ -78,11 +78,11 @@ const App = () => {
   }
 
   const createNewBlog = async (blog) => {
-    
+
     blogFormRef.current.toggleVisible()
 
     try {
-      const newBlog = await blogService.create({ blog })
+      const newBlog = await blogService.create(blog)
 
       setBlogs( blogs.concat(newBlog) )
 
@@ -97,7 +97,19 @@ const App = () => {
         setErrorMessage(null)
       }, 3000)
     }
+  }
 
+  const deleteBlog = async (removeBlog) => {
+    if (window.confirm(`Remove ${removeBlog.title}?`)) {
+        try {
+          await blogService.deleteBlog(removeBlog.id)
+
+          setBlogs( blogs.filter( blog => blog.id !== removeBlog.id ) )
+        }
+        catch (exception) {
+          console.log(exception)
+        }
+      }
   }
 
   const logOut = () => {
@@ -117,12 +129,12 @@ const App = () => {
         <h2>Blogs</h2>
         <p> {user.name} logged in <button onClick={logOut} >Logout</button> </p> 
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} deleteBlog={deleteBlog} />
         )}
       </div>
       <Notification message={errorMessage} />
       <Toggleable buttonLabel="create blog" ref={blogFormRef} >
-        <BlogForm createNewBlog={ createNewBlog } />
+        <BlogForm createNewBlog={ createNewBlog } user={user} />
       </Toggleable>
     </div>
   )

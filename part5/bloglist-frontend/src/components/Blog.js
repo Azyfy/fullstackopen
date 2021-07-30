@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import blogServices from "../services/blogs"
 
 
-const Blog = ({blog}) => {
+const Blog = ({blog, deleteBlog}) => {
   const [ toggle, setToggle ] = useState(false)
   const [ likes, setLikes ] = useState(blog.likes)
+
+  const loggedUser = JSON.parse(window.localStorage.getItem("loggedUser"))
 
   const blogStyle = {
     paddingTop: 10,
@@ -37,7 +39,7 @@ const Blog = ({blog}) => {
   }
 
   const dislplayVisible = { display: toggle ? "" : "none" }
-
+  
   return (
   <div style={blogStyle} >
     {blog.title} {blog.author} 
@@ -47,6 +49,11 @@ const Blog = ({blog}) => {
       <p> {blog.url} </p>
       <p> {likes} <button onClick={ likeBlog(blog) } >Like</button> </p>
       <p> {blog.user.name} </p>
+      
+      {(blog.user.name === loggedUser.name ) ?
+        <button onClick={ () => deleteBlog(blog) } >Remove</button>
+        : <></>
+        }
     </div>
   </div>  
 )
