@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import BlogForm from "./components/BlogForm"
+import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginServices from "./services/login"
 
@@ -14,11 +16,7 @@ const App = () => {
   const [author, setAuthor] = useState("") 
   const [url, setURL] = useState("") 
 
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
-  }, [])
+  const blogFormRef = useRef()
 
   useEffect( () => {
     const loggedUser = window.localStorage.getItem("loggedUser")
@@ -28,6 +26,12 @@ const App = () => {
       blogService.setToken(user.token)
     }
 
+  }, [])
+
+  useEffect(() => {
+    blogService.getAll().then(blogs =>
+      setBlogs( blogs )
+    )  
   }, [])
 
   const handleLogin = async (event) => {
@@ -76,7 +80,8 @@ const App = () => {
 
   const handleBlogPost = async (event) => {
     event.preventDefault()
-    console.log(title, author, url)
+
+    blogFormRef.current.toggleVisible()
 
     try {
       const newBlog = await blogService.create({
@@ -123,25 +128,18 @@ const App = () => {
           <Blog key={blog.id} blog={blog} />
         )}
       </div>
-      <div>
-        <h3>Create new</h3>
-        <Notification message={errorMessage} />
-        <form onSubmit={handleBlogPost} >
-          <div>
-            Title:
-            <input type="text" value={title} name="Title" onChange={({ target }) => setTitle(target.value) } />
-          </div>
-          <div>
-            Author:
-            <input type="text" value={author} name="Author" onChange={({ target }) => setAuthor(target.value) } />
-          </div>
-          <div>
-            url:
-            <input type="text" value={url} name="url" onChange={({ target }) => setURL(target.value) } />
-          </div>
-          <button>Create</button>
-        </form>
-      </div>
+      <Notification message={errorMessage} />
+      <Toggleable buttonLabel="create blog" ref={blogFormRef} >
+        <BlogForm 
+                  title={title}
+                  author={author}
+                  url={url}
+                  handleBlogPost={handleBlogPost}
+                  handleTitleChange={({ target }) => setTitle(target.value) }
+                  handleAuthorChange={({ target }) => setAuthor(target.value)}
+                  handleUrlChange={({ target }) => setURL(target.value)}
+        />
+      </Toggleable>
     </div>
   )
 }
