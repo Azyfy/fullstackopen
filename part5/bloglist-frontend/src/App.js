@@ -12,9 +12,6 @@ const App = () => {
   const [password, setPassword] = useState("")
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [title, setTitle] = useState("") 
-  const [author, setAuthor] = useState("") 
-  const [url, setURL] = useState("") 
 
   const blogFormRef = useRef()
 
@@ -78,15 +75,12 @@ const App = () => {
     )
   }
 
-  const handleBlogPost = async (event) => {
-    event.preventDefault()
-
+  const createNewBlog = async (blog) => {
+    
     blogFormRef.current.toggleVisible()
 
     try {
-      const newBlog = await blogService.create({
-        title, author, url,
-      })
+      const newBlog = await blogService.create({ blog })
 
       setBlogs( blogs.concat(newBlog) )
 
@@ -94,10 +88,6 @@ const App = () => {
       setTimeout(() => {
         setErrorMessage(null)
       }, 3000)
-
-      setTitle("")
-      setAuthor("")
-      setURL("")
     }
     catch (exception) {
       setErrorMessage('Blog not created')
@@ -130,15 +120,7 @@ const App = () => {
       </div>
       <Notification message={errorMessage} />
       <Toggleable buttonLabel="create blog" ref={blogFormRef} >
-        <BlogForm 
-                  title={title}
-                  author={author}
-                  url={url}
-                  handleBlogPost={handleBlogPost}
-                  handleTitleChange={({ target }) => setTitle(target.value) }
-                  handleAuthorChange={({ target }) => setAuthor(target.value)}
-                  handleUrlChange={({ target }) => setURL(target.value)}
-        />
+        <BlogForm createNewBlog={ createNewBlog } />
       </Toggleable>
     </div>
   )
