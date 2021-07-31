@@ -73,3 +73,34 @@ test("clicking the button shows more details", () => {
         3
     )
 })
+
+test("clicking the like button twice", () => {
+    const blog = {
+        title: "Frontend Post",
+        author: "Pengu",
+        url: "some page",
+        likes: 3,
+        user: {
+            name: "Pengu-san",
+        },
+    }
+
+    const loggedUser = {
+        name: "NO",
+    }
+
+    const mockHandler = jest.fn()
+
+    const component = render(
+        <Blog  blog={blog}  loggedUser={loggedUser} updateBlog={mockHandler} />
+    )
+
+    const button = component.getByText("Like")
+     fireEvent.click(button)
+     fireEvent.click(button)
+
+   // console.log(prettyDOM(button))
+  //   component.debug()
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+})

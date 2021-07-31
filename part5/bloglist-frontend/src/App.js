@@ -100,6 +100,25 @@ const App = () => {
       }
   }
 
+  const updateBlog = async (blog, id) => {
+
+        try {
+
+        const updateBlog = {
+          title: blog.title,
+          author: blog.author,
+          url: blog.url,
+          likes: blog.likes,
+        }
+
+        await blogService.update(updateBlog, id)
+
+        }
+        catch (exception) {
+          console.log(exception)
+        }
+  }
+
   const logOut = () => {
     window.localStorage.removeItem(
       "loggedUser", JSON.stringify(user)
@@ -124,7 +143,7 @@ const App = () => {
         <h2>Blogs</h2>
         <p> {user.name} logged in <button onClick={logOut} >Logout</button> </p>
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} deleteBlog={deleteBlog} loggedUser={user} />
+          <Blog key={blog.id} blog={blog} deleteBlog={deleteBlog} loggedUser={user} updateBlog={updateBlog} />
         )}
       </div>
       <Notification message={errorMessage} />

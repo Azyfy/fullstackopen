@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import blogServices from "../services/blogs"
 
 
-const Blog = ({ blog, deleteBlog, loggedUser }) => {
+const Blog = ({ blog, deleteBlog, loggedUser, updateBlog }) => {
   const [ toggle, setToggle ] = useState(false)
   const [ likes, setLikes ] = useState(blog.likes)
 
@@ -15,25 +15,14 @@ const Blog = ({ blog, deleteBlog, loggedUser }) => {
   }
 
   const likeBlog =  (blog) => {
-    return (
-      async () => {
-        try {
-
-        const updateBlog = {
+        const updatedBlog = {
           title: blog.title,
           author: blog.author,
           url: blog.url,
           likes: blog.likes +1,
         }
-
-        await blogServices.update(updateBlog, blog.id)
-        setLikes(likes + 1)
-        }
-        catch (exception) {
-          console.log(exception)
-        }
-      }
-    )
+        updateBlog(updatedBlog, blog.id)
+        setLikes(blog.likes +1)
   }
 
   const dislplayVisible = { display: toggle ? "" : "none" }
@@ -45,7 +34,7 @@ const Blog = ({ blog, deleteBlog, loggedUser }) => {
 
     <div style={ dislplayVisible } >
       <p> {blog.url} </p>
-      <p> {likes} <button onClick={ likeBlog(blog) } >Like</button> </p>
+      <p> {likes} <button onClick={ () => { likeBlog(blog) } } >Like</button> </p>
       <p> {blog.user.name} </p>
 
       {(blog.user.name === loggedUser.name ) ?
