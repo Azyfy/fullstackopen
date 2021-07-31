@@ -148,7 +148,7 @@ const App = () => {
       </div>
       <Notification message={errorMessage} />
       <Toggleable buttonLabel="Create new blog" ref={blogFormRef} >
-        <BlogForm createNewBlog={ createNewBlog } user={user} />
+        <BlogForm createNewBlog={ createNewBlog } />
       </Toggleable>
     </div>
   )

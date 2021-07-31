@@ -1,6 +1,4 @@
 import React, { useState } from "react"
-import blogServices from "../services/blogs"
-
 
 const Blog = ({ blog, deleteBlog, loggedUser, updateBlog }) => {
   const [ toggle, setToggle ] = useState(false)
