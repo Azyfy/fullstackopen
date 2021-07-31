@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from "./components/BlogForm"
 import Toggleable from './components/Toggleable'
+import Login from "./components/Login"
 import blogService from './services/blogs'
 import loginServices from "./services/login"
 
@@ -54,27 +55,14 @@ const App = () => {
         setErrorMessage(null)
       }, 3000)
     }
-
   }
 
-  const loginForm = () => {
-    return (
-    <form onSubmit={handleLogin}>
-      <h3> Log in to application </h3>
+  const handleUsernameChange = (value) => {
+    setUsername(value)
+  }
 
-      <Notification message={errorMessage} />
-
-      <div>
-        Username
-          <input type="text" value={username} name="Username" onChange={({ target }) => setUsername(target.value) } />
-      </div>
-      <div>
-        Password
-          <input type="password" value={password} name="Password" onChange={({ target }) => setPassword(target.value) } />
-      </div>
-      <button>Log In</button>
-    </form>
-    )
+  const handlePasswordChange = (value) => {
+    setPassword(value)
   }
 
   const createNewBlog = async (blog) => {
@@ -120,7 +108,14 @@ const App = () => {
   }
 
   if (user === null) {
-    return loginForm()
+    return ( 
+    <Login handleLogin={handleLogin}
+    errorMessage={errorMessage}
+    handleUsernameChange={handleUsernameChange}
+    handlePasswordChange={handlePasswordChange}
+    username={username}
+    password={password} />
+    )
   }
 
   return (
@@ -133,7 +128,7 @@ const App = () => {
         )}
       </div>
       <Notification message={errorMessage} />
-      <Toggleable buttonLabel="create blog" ref={blogFormRef} >
+      <Toggleable buttonLabel="Create new blog" ref={blogFormRef} >
         <BlogForm createNewBlog={ createNewBlog } user={user} />
       </Toggleable>
     </div>
