@@ -1,6 +1,7 @@
-import React from 'react'
-const Notification = ({message}) => (
-       <div style={{color: "blue"}}>
+import React from "react"
+
+const Notification = ({ message }) => (
+       <div style={{ color: "blue" }}>
             <p>
                 {message}
             </p>

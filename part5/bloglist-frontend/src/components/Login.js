@@ -17,12 +17,12 @@ const Login = ({ handleLogin,
 
             <div>
                 Username
-                <input type="text" value={username} name="Username" 
+                <input type="text" value={username} name="Username"
                         onChange={({ target }) => handleUsernameChange(target.value) } />
             </div>
             <div>
                 Password
-                <input type="password" value={password} name="Password" 
+                <input type="password" value={password} name="Password"
                         onChange={({ target }) => handlePasswordChange(target.value) } />
             </div>
             <button>Log In</button>

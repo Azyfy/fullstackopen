@@ -4,9 +4,9 @@ const BlogForm = ({
     createNewBlog,
     }) => {
 
-        const [title, setTitle] = useState("") 
-        const [author, setAuthor] = useState("") 
-        const [url, setURL] = useState("") 
+        const [title, setTitle] = useState("")
+        const [author, setAuthor] = useState("")
+        const [url, setURL] = useState("")
 
         const handleBlogPost =  (event) => {
             event.preventDefault()
@@ -24,7 +24,7 @@ const BlogForm = ({
               setURL("")
         }
 
-    
+
         return (
             <div>
             <h3>Create new</h3>
