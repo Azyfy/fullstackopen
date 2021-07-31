@@ -4,7 +4,7 @@ import Notification from "./components/Notification"
 import BlogForm from "./components/BlogForm"
 import Toggleable from "./components/Toggleable"
 import Login from "./components/Login"
-import blogService from "./services/blogs'"
+import blogService from "./services/blogs"
 import loginServices from "./services/login"
 
 const App = () => {
