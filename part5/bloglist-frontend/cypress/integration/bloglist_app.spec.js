@@ -43,4 +43,20 @@ describe("Blog app", function() {
         })
     })
 
+    describe("When logged in", function() {
+        beforeEach( function() {
+            cy.login({ username:"Pengu", password: "12345" })
+        })
+
+        it("A blog can be created", function() {
+            cy.get("#open-blog-form-btn").click()
+            cy.get("#title-input").type("Writing the title with cypress")
+            cy.get("#author-input").type("Pengu")
+            cy.get("#url-input").type("https://www.cypress.io/")
+            cy.get("#create-blog-btn").click()
+
+            cy.contains("Writing the title with cypress Pengu")
+        })
+    })
+
   })
