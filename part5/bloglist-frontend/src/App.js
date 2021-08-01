@@ -53,7 +53,7 @@ const App = () => {
       setErrorMessage("Wrong credentials")
       setTimeout(() => {
         setErrorMessage(null)
-      }, 3000)
+      }, 5000)
     }
   }
 
@@ -77,13 +77,13 @@ const App = () => {
       setErrorMessage(`New glog added by the title: ${newBlog.title}`)
       setTimeout(() => {
         setErrorMessage(null)
-      }, 3000)
+      }, 5000)
     }
     catch (exception) {
       setErrorMessage("Blog not created")
       setTimeout(() => {
         setErrorMessage(null)
-      }, 3000)
+      }, 5000)
     }
   }
 

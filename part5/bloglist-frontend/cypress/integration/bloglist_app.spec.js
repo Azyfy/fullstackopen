@@ -1,6 +1,14 @@
 describe("Blog app", function() {
     beforeEach(function() {
       cy.request("POST", "http://localhost:3003/api/testing/reset")
+      
+      const user = {
+          name: "Pengu-san",
+          username: "Pengu",
+          password: "12345"
+      }
+      
+      cy.request("POST", "http://localhost:3003/api/users/", user)
       cy.visit("http://localhost:3000")
     })
   
@@ -10,4 +18,29 @@ describe("Blog app", function() {
       cy.contains("Password")
       cy.contains("Log In")
     })
+
+    describe("Login", function() {
+        it("Suceeds with correct credentials", function() {
+            cy.get("#username").type("Pengu")
+            cy.get("#password").type("12345")
+            cy.get("#login-btn").click()
+
+            cy.contains("Pengu-san logged in")
+        })
+        it("Fails with wrong crdentials", function() {
+            cy.get("#username").type("Pengu")
+            cy.get("#password").type("wrong")
+            cy.get("#login-btn").click()
+/*
+            cy.get("Wrong credentials") passed first time,
+                             while the message lasted 3s  
+                             times out now.        
+
+            cy.should("contain", "Wrong credentials")
+                .and("have.css", "color", "rgb(0,0,255)")
+*/
+            cy.get("html").should("not.contain", "Pengu-san logged in")
+        })
+    })
+
   })
