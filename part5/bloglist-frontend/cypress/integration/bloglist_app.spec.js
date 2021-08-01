@@ -70,7 +70,8 @@ describe("Blog app", function() {
                 cy.createBlog({
                     title: "Blog does exist", 
                     author: "Pengu", 
-                    url: "Pengus page"
+                    url: "Pengus page",
+                    likes: 0
                  })
             })
 
@@ -99,6 +100,19 @@ describe("Blog app", function() {
                 cy.get("#show-hide-blog-details-btn").click()
 
                 cy.get("#remove-blog-btn").should("not.exist")
+            })
+
+            it("Check if blogs are ordered by the number of likes", function() {
+                cy.createBlog({
+                    title: "Should be first with more likes", 
+                    author: "Pengu", 
+                    url: "Pengus page",
+                    likes: 3
+                 })
+
+                cy.log("First element based on likes")
+
+                cy.get(".blog").first().should("contain", "Should be first with more likes Pengu")
             })
         })
     })
