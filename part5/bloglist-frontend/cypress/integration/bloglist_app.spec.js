@@ -57,6 +57,28 @@ describe("Blog app", function() {
 
             cy.contains("Writing the title with cypress Pengu")
         })
+
+        describe("Blogs exist", function() {
+            beforeEach( function() {
+                cy.createBlog({
+                    title: "Blog does exist", 
+                    author: "Pengu", 
+                    url: "Pengus page"
+                 })
+            })
+
+            it("Check if blog exists", function() {
+                cy.contains("Blogs")
+                cy.contains("Blog does exist")
+            })
+      
+            it("Can like a blog", function() {
+                cy.get("#show-hide-blog-details-btn").click()
+                cy.get("#like-btn").click()
+
+                cy.contains("1")
+            })
+        })
     })
 
   })

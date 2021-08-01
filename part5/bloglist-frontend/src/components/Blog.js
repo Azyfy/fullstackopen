@@ -28,11 +28,11 @@ const Blog = ({ blog, deleteBlog, loggedUser, updateBlog }) => {
   return (
   <div style={blogStyle} className="blog" >
     {blog.title} {blog.author}
-    <button onClick={() => setToggle(!toggle) } > {toggle ? "Hide" : "View" } </button>
+    <button id="show-hide-blog-details-btn" onClick={() => setToggle(!toggle) } > {toggle ? "Hide" : "View" } </button>
 
     <div style={ dislplayVisible } >
       <p> {blog.url} </p>
-      <p> {likes} <button onClick={ () => { likeBlog(blog) } } >Like</button> </p>
+      <p> {likes} <button id="like-btn" onClick={ () => { likeBlog(blog) } } >Like</button> </p>
       <p> {blog.user.name} </p>
 
       {(blog.user.name === loggedUser.name ) ?
