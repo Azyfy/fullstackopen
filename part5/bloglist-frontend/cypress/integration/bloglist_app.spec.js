@@ -7,8 +7,15 @@ describe("Blog app", function() {
           username: "Pengu",
           password: "12345"
       }
+
+      const user2 = {
+        name: "Pengu2-san",
+        username: "Pengu2",
+        password: "12345"
+    }
       
       cy.request("POST", "http://localhost:3003/api/users/", user)
+      cy.request("POST", "http://localhost:3003/api/users/", user2)
       cy.visit("http://localhost:3000")
     })
   
@@ -77,6 +84,21 @@ describe("Blog app", function() {
                 cy.get("#like-btn").click()
 
                 cy.contains("1")
+            })
+
+            it("Can delete a blog", function () {
+                cy.get("#show-hide-blog-details-btn").click()
+                cy.get("#remove-blog-btn").click()
+
+                cy.get("html").should("not.contain", "Blog does exist Pengu")
+            })
+
+            it("User cant delete anothers blog", function() {
+                cy.login({ username:"Pengu2", password: "12345" })
+
+                cy.get("#show-hide-blog-details-btn").click()
+
+                cy.get("#remove-blog-btn").should("not.exist")
             })
         })
     })
