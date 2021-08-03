@@ -5,6 +5,8 @@ const App = () => {
   const anecdotes = useSelector(state => state)
   const dispatch = useDispatch()
 
+  anecdotes.sort(function(a, b){return b.votes - a.votes})
+
   const vote = (id) => {
     const action = {
       type: "VOTE",
