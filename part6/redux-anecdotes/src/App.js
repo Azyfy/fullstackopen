@@ -15,6 +15,25 @@ const App = () => {
     dispatch(action)
   }
 
+  const getId = () => (100000 * Math.random()).toFixed(0)
+
+  const addAnnecdote = (event) => {
+    event.preventDefault()
+
+    const content = event.target.anecdote.value
+    event.target.anecdote.value=""
+
+    const action = {
+      type: "ADD_ANECDOTE",
+      data: {
+        content,
+        votes: 0,
+        id: getId()
+      }
+    }
+    dispatch(action)
+  }
+
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -30,8 +49,8 @@ const App = () => {
         </div>
       )}
       <h2>create new</h2>
-      <form>
-        <div><input /></div>
+      <form onSubmit={addAnnecdote}>
+        <div><input name="anecdote" /></div>
         <button>create</button>
       </form>
     </div>
