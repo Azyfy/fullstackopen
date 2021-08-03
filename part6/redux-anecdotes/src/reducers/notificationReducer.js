@@ -8,7 +8,7 @@ const reducer = (state = initialState, action) => {
         case "REMOVE":
             return "none"
         default:
-            return state
+            return initialState
     }
 }
 
