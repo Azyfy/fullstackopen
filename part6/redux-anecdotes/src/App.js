@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { createAnecdote, voteAnecdote } from './reducers/anecdoteReducer'
 
 const App = () => {
   const anecdotes = useSelector(state => state)
@@ -8,16 +9,10 @@ const App = () => {
   anecdotes.sort(function(a, b){return b.votes - a.votes})
 
   const vote = (id) => {
-    const action = {
-      type: "VOTE",
-      data: {
-        id
-      }
-    }
-    dispatch(action)
+
+    dispatch(voteAnecdote(id))
   }
 
-  const getId = () => (100000 * Math.random()).toFixed(0)
 
   const addAnnecdote = (event) => {
     event.preventDefault()
@@ -25,15 +20,7 @@ const App = () => {
     const content = event.target.anecdote.value
     event.target.anecdote.value=""
 
-    const action = {
-      type: "ADD_ANECDOTE",
-      data: {
-        content,
-        votes: 0,
-        id: getId()
-      }
-    }
-    dispatch(action)
+    dispatch(createAnecdote(content))
   }
 
   return (
