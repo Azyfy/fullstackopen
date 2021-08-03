@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { voteAnecdote } from '../reducers/anecdoteReducer'
 
 const AnecdotesList = () => {
-    const anecdotes = useSelector(state => state)
+    const anecdotes = useSelector(state => state.anecdotes)
     const dispatch = useDispatch()
+
+    dispatch({type:"NOTIFY", message: "notification message" })
 
     anecdotes.sort(function(a, b){return b.votes - a.votes})
 
