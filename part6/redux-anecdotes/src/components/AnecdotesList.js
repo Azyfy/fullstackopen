@@ -15,7 +15,7 @@ const AnecdotesList = () => {
     filteredAnecdotes.sort(function(a, b){return b.votes - a.votes})
 
     const vote = (anecdote) => {
-        dispatch(voteAnecdote(anecdote.id))
+        dispatch(voteAnecdote(anecdote))
 
         dispatch(displayMessage(`You voted for ${anecdote.content}`))
 
