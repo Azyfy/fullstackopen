@@ -1,7 +1,7 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { voteAnecdote } from '../reducers/anecdoteReducer'
-import { notify } from '../reducers/notificationReducer'
+import React from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { voteAnecdote } from "../reducers/anecdoteReducer"
+import { notify } from "../reducers/notificationReducer"
 
 const AnecdotesList = () => {
     const anecdotes = useSelector(state => state.anecdotes)

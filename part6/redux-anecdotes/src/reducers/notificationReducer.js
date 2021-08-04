@@ -15,23 +15,23 @@ const reducer = (state = initialState, action) => {
 export const notify = (message, time) => {
     return async dispatch => {
         dispatch(displayMessage(message))
-        setTimeout(() => { 
+        setTimeout(() => {
             dispatch(removeMessage())
-        }, time * 100);
-        
+        }, time * 100)
+
     }
-} 
+}
 
 const displayMessage = (message) => {
   return {
-        type:"NOTIFY", 
+        type:"NOTIFY",
         message
     }
        }
 
 const removeMessage = () => {
     return  {
-         type:"REMOVE", 
+         type:"REMOVE",
      }
         }
 

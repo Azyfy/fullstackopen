@@ -6,7 +6,7 @@ const reducer = (state = initialState, action) => {
         case "FILTER":
             return action.content
         default:
-            return initialState
+            return state
     }
 }
 

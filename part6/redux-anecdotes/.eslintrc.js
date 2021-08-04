@@ -21,6 +21,7 @@ module.exports = {
     ],
     "rules": {
         "indent": "off",
+        "no-case-declarations": "off",
         "linebreak-style": [
             "error",
             "unix"
