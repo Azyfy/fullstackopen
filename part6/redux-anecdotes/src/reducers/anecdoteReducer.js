@@ -45,14 +45,10 @@ const reducer = (state = [], action) => {
 
 }
 
-export const createAnecdote = (content) => {
+export const createAnecdote = (anecdote) => {
   return {
     type: "ADD_ANECDOTE",
-    data: {
-      content,
-      votes: 0,
-      id: getId()
-    }
+    data: anecdote
   }
 }
 
