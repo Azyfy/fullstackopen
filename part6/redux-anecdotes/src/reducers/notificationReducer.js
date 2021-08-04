@@ -8,21 +8,32 @@ const reducer = (state = initialState, action) => {
         case "REMOVE":
             return "none"
         default:
-            return initialState
+            return state
     }
 }
 
-export const displayMessage = (message) => {
-    return {
+export const notify = (message, time) => {
+    return async dispatch => {
+        dispatch(displayMessage(message))
+        setTimeout(() => { 
+            dispatch(removeMessage())
+        }, time * 100);
+        
+    }
+} 
+
+const displayMessage = (message) => {
+  return {
         type:"NOTIFY", 
         message
     }
-}
+       }
 
-export const removeMessage = () => {
-    return {
-        type:"REMOVE"
-    }
-}
+const removeMessage = () => {
+    return  {
+         type:"REMOVE", 
+     }
+        }
+
 
 export default reducer
