@@ -15,12 +15,18 @@ const reducer = (state = initialState, action) => {
 export const notify = (message, time) => {
     return async dispatch => {
         dispatch(displayMessage(message))
-        setTimeout(() => {
-            dispatch(removeMessage())
-        }, time * 100)
 
+        function callTimeOut () {
+            window["reload_timer"] = setTimeout(() => {
+                    dispatch(removeMessage())
+                }, time * 100)
+        }
+        
+        clearTimeout(window["reload_timer"])
+        callTimeOut()
     }
 }
+
 
 const displayMessage = (message) => {
   return {
