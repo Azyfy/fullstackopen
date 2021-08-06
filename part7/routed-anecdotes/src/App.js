@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom"
+import { Switch, Route, Link, useParams, useRouteMatch, useHistory } from "react-router-dom"
 
-const Menu = () => {
+const Menu = ({ notification }) => {
   const padding = {
     paddingRight: 5
   }
@@ -10,6 +10,7 @@ const Menu = () => {
       <Link style={padding} to="/" >anecdotes</Link>
       <Link style={padding} to="/new" >create new</Link>
       <Link style={padding} to="/about" >about</Link>
+      <p> {notification} </p>
     </div>
   )
 }
@@ -29,11 +30,7 @@ const AnecdoteList = ({ anecdotes }) => (
   </div>
 )
 
-const SingleAnecdote = ({ anecdotes }) => {
-  const id = useParams().id
-
-  const anecdote = anecdotes.find(anecdote => {
-    return Number(anecdote.id) === Number(id) })
+const SingleAnecdote = ({ anecdote }) => {
 
   return (
     <div>
@@ -71,6 +68,7 @@ const CreateNew = (props) => {
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
 
+  const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -80,6 +78,8 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+
+    history.push("/")
   }
 
   return (
@@ -123,11 +123,21 @@ const App = () => {
     }
   ])
 
+  const match = useRouteMatch("/anecdotes/:id")
+  const anecdote = match 
+                ? anecdotes.find(anecdote => Number(anecdote.id) === Number(match.params.id))
+                : null
+
   const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+
+    setNotification(`A new ${anecdote.content} anecdote created.`)
+    setTimeout(() => {
+      setNotification("")
+    }, 10000)
   }
 
   const anecdoteById = (id) =>
@@ -147,11 +157,10 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-      <Router>
-      <Menu />
+      <Menu notification={notification} />
         <Switch>
           <Route path="/anecdotes/:id" >
-              <SingleAnecdote anecdotes={anecdotes} />
+              <SingleAnecdote anecdote={anecdote} />
           </Route>
 
           <Route path="/new" >
@@ -166,7 +175,6 @@ const App = () => {
             <AnecdoteList anecdotes={anecdotes} />
           </Route>
         </Switch>
-      </Router>
       <Footer />
     </div>
   )
