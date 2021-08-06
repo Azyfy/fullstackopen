@@ -32,7 +32,11 @@ const AnecdoteList = ({ anecdotes }) => (
 )
 
 const SingleAnecdote = ({ anecdote }) => {
-
+  if(!anecdote){
+    return (
+      <p>No anecdote under this id found</p>
+    )
+  }
   return (
     <div>
       <h3>{anecdote.content} by {anecdote.author} </h3>
