@@ -129,12 +129,17 @@ const App = () => {
       <Router>
       <Menu />
         <Switch>
-          <Route path="/new" >
-            <AnecdoteList anecdotes={anecdotes} />
+
+        <Route path="/new" >
+            <CreateNew addNew={addNew} />
           </Route>
 
           <Route path="/about" >
             <About />
+          </Route>
+
+          <Route path="/" >
+            <AnecdoteList anecdotes={anecdotes} />
           </Route>
 
           <Route path="/" >
