@@ -10,9 +10,7 @@ const App = () => {
   const [page, setPage] = useState('authors')
 
   const result = useQuery(ALL_AUTHORS)
-  const result2 = useQuery(ALL_BOOKS,{
-    pollInterval: 2000,
-  })
+  const result2 = useQuery(ALL_BOOKS)
 
   if (result.loading || result2.loading)  {
     return <div>loading...</div>
