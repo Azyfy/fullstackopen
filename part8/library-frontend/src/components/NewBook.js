@@ -1,11 +1,17 @@
+import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
+import { CREATE_BOOK } from "../quaries"
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuhtor] = useState('')
-  const [published, setPublished] = useState('')
+  const [published, setPublished] = useState("")
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
+
+  const [ createBook ] = useMutation(CREATE_BOOK, {
+    onError: (error) => {   console.log( "ERROR", error)    }
+  })
 
   if (!props.show) {
     return null
@@ -13,11 +19,13 @@ const NewBook = (props) => {
 
   const submit = async (event) => {
     event.preventDefault()
-    
+
     console.log('add book...')
 
+    createBook({ variables: {title, published, author, genres}})
+
     setTitle('')
-    setPublished('')
+    setPublished("")
     setAuhtor('')
     setGenres([])
     setGenre('')
@@ -50,7 +58,7 @@ const NewBook = (props) => {
           <input
             type='number'
             value={published}
-            onChange={({ target }) => setPublished(target.value)}
+            onChange={({ target }) => setPublished(Number(target.value))}
           />
         </div>
         <div>
