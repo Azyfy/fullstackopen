@@ -1,5 +1,6 @@
   
 import React from 'react'
+import AuthorBirthForm from "./AuthorBirthForm"
 
 const Authors = (props) => {
 
@@ -31,7 +32,7 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
-
+      <AuthorBirthForm />
     </div>
   )
 }
