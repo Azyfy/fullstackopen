@@ -1,5 +1,10 @@
 const { ApolloServer, gql } = require('apollo-server')
 const { v1: uuid } = require('uuid')
+const mongoose = require("mongoose")
+require("dotenv").config()
+
+const Author = require("./models/author")
+const Book = require("./models/book")
 
 let authors = [
   {
@@ -87,13 +92,25 @@ let books = [
 
 const persons = []
 
+const MONGODB_URI = process.env.MONGODB_URI
+
+console.log('connecting to', MONGODB_URI)
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+  .then(() => {
+    console.log('connected to MongoDB')
+  })
+  .catch((error) => {
+    console.log('error connection to MongoDB:', error.message)
+  })
+
 const typeDefs = gql`
     type Book {
         title: String!
         published: Int!
-        author: String!
+        author: Author!
         id: ID!
-        genres: [String]
+        genres: [String!]!
     }
 
     type Author {
@@ -106,10 +123,13 @@ const typeDefs = gql`
     type Mutation {
         addBook(
           title: String!
-          author: String!
+          name: String!
+          born: Int
+          bookCount: Int
           published: Int!
           genres: [String]
         ): Book
+        
         editAuthor(
           name: String!
           setBornTo: Int!
@@ -124,11 +144,19 @@ const typeDefs = gql`
       allAuthors: [Author] 
   }
 `
+/*
+The following things do not have to work just yet
 
+    allBooks query with parameters
+    bookCount field of an author object
+    author field of a book
+    editAuthor mutation
+*/
 const resolvers = {
     Author: {
-        bookCount: (root, args) => {
+        bookCount: async (root, args) => {
 
+            const books = await Books.find({})
             const filteredBooks = books.filter(book => book.author === root.name)
             return filteredBooks.length
         }
@@ -148,16 +176,20 @@ const resolvers = {
     },
 
     Mutation: {
-        addBook: (root, args) => {
-
-            const author = authors.find(author => {author.name === args.author})
-            if(!author) {
-              authors = authors.concat({ name: args.author,  id: uuid() })
+        addBook: async (root, args) => {
+            console.log("ARGS", args)
+          const author = await Author.findOne({ name: args.name })
+          console.log("FIND", author) 
+          if(!author) {
+              console.log("HERE", args.name)
+            const  newAuthor = new Author ({ name: args.name, born: args.born  })
+            console.log("AUTH", newAuthor)
+            newAuthor.save()
             }
 
-            const book = { ...args, id: uuid() }
-            books = books.concat(book)
-            return book
+            const book = new Book ({ ...args })
+
+            return book.save()
         },
 
         editAuthor: (root, args) => {
