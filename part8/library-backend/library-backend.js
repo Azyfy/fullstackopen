@@ -125,11 +125,10 @@ const typeDefs = gql`
           title: String!
           name: String!
           born: Int
-          bookCount: Int
           published: Int!
           genres: [String]
         ): Book
-        
+
         editAuthor(
           name: String!
           setBornTo: Int!
@@ -147,62 +146,68 @@ const typeDefs = gql`
 /*
 The following things do not have to work just yet
 
-    allBooks query with parameters
-    bookCount field of an author object
-    author field of a book
-    editAuthor mutation
+     allBooksWith the parameter author
 */
 const resolvers = {
     Author: {
-        bookCount: async (root, args) => {
+        bookCount: async (root) => {
 
-            const books = await Books.find({})
-            const filteredBooks = books.filter(book => book.author === root.name)
-            return filteredBooks.length
+            const bookCount = await Book.collection.countDocuments({ author: root._id })
+
+            return bookCount
         }
     },
 
+    Book: {
+      author: (root) => {
+        console.log("book ROOT",root)
+        
+      }
+    },
+
     Query: {
-        bookCount: () => books.length,
-        authorCount: () => authors.length,
-        allBooks: () => books,
-        allBooksWith: (root, args) => books.filter(book => {
+        bookCount: () => Book.collection.countDocuments(),
+        authorCount: () => Author.collection.countDocuments(),
+        allBooks: () => Book.find({}),
+        allBooksWith: async (root, args) => {
             if(!args.author) {
-                return book.genres.includes(args.genre)
+              const booksByGenre = await Book.find( { genres: { $in: [ args.genre ] } } )
+              return booksByGenre
             }
             return ( (book.author === args.author) && (book.genres.includes(args.genre)) )
-            }),
-        allAuthors: () => authors,
+            },
+        allAuthors: () => Author.find({}),
     },
 
     Mutation: {
         addBook: async (root, args) => {
-            console.log("ARGS", args)
-          const author = await Author.findOne({ name: args.name })
-          console.log("FIND", author) 
+
+          let author = await Author.findOne({ name: args.name })
+
           if(!author) {
-              console.log("HERE", args.name)
+
             const  newAuthor = new Author ({ name: args.name, born: args.born  })
-            console.log("AUTH", newAuthor)
-            newAuthor.save()
+
+            author = await newAuthor.save()
             }
 
             const book = new Book ({ ...args })
+            book.author = author._id
 
             return book.save()
         },
 
-        editAuthor: (root, args) => {
+        editAuthor: async (root, args) => {
 
-            const author = authors.find(author => author.name === args.name)
+            const author = await Author.findOne({ name: args.name })
 
             if(!author) {
               return null
             }
 
-            const updatedAuthor = { ...author, born: args.setBornTo }
-            authors = authors.map(author => author.name === args.name ? updatedAuthor : author )
-            return updatedAuthor
+            author.born = args.setBornTo
+
+            return author.save()
           },
     }
 
