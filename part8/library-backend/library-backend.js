@@ -159,9 +159,11 @@ const resolvers = {
     },
 
     Book: {
-      author: (root) => {
-        console.log("book ROOT",root)
-        
+      author: async (root) => {
+
+        const author = await Author.findById( root.author )
+
+        return author
       }
     },
 
