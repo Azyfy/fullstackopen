@@ -32,7 +32,9 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
+      {(props.tokenExists) ?
       <AuthorBirthForm authors={authors} />
+      :(null)}
     </div>
   )
 }
