@@ -9,8 +9,9 @@ const Books = (props) => {
   }
 
   const books = props.books
-  
+
   let genres = ["All genres"]
+
   books.forEach(book => {
     const array = book.genres.filter(genre => !genres.includes(genre))
    
