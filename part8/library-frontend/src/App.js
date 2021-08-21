@@ -1,28 +1,41 @@
 
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useApolloClient, useQuery, useLazyQuery } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm  from "./components/LoginForm"
 import RecommendedBooks from './components/RecommendedBooks'
-import { ALL_AUTHORS, ALL_BOOKS } from "./quaries"
+import { ALL_AUTHORS, ALL_BOOKS, ALL_BOOKS_WITH } from "./quaries"
 
 const App = () => {
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState(null)
+  const [user, setUser] = useState(null)
+  const [recommendedBooks, setRecommendedBooks] = useState([])
 
   const result = useQuery(ALL_AUTHORS)
   const result2 = useQuery(ALL_BOOKS)
   const client = useApolloClient()
 
+
+  const [ getRecommendedBooks, resultRecommended ] = useLazyQuery(ALL_BOOKS_WITH )
+
   useEffect(() => {
     const localToken = window.localStorage.getItem("user-token")
+    const localUser = window.localStorage.getItem("user")
 
     if(localToken) {
       setToken(localToken)
+      setUser(JSON.parse(localUser))
     }
   }, [])
+
+  useEffect(() => {
+    if (resultRecommended.data) {
+      setRecommendedBooks(resultRecommended.data.allBooksWith)
+    }  
+  }, [resultRecommended])
 
   if (result.loading || result2.loading)  {
     return <div>loading...</div>
@@ -35,6 +48,11 @@ const App = () => {
     setPage("authors")
   }
 
+  const handleRecommended = () => {
+    getRecommendedBooks({ variables: { genre: "SCI-FI" } })
+    setPage('recommended')
+  }
+
   return (
     <div>
       <div>
@@ -45,7 +63,7 @@ const App = () => {
 
         :( <>
             <button onClick={() => setPage('add')}>add book</button>
-            <button onClick={() => setPage('recommended')}>recommended</button>
+            <button onClick={handleRecommended}>recommended</button>
             <button onClick={handleLogout} >logout</button>
           </>
         )
@@ -69,13 +87,15 @@ const App = () => {
 
       <RecommendedBooks
         show={page === 'recommended'}
-        books={result2.data.allBooks}
+        user={user}
+        books={recommendedBooks}
       />
 
       <LoginForm
         show={page === 'login'}
         setPage = {setPage}
         setToken={setToken}
+        setUser={setUser}
       />
 
     </div>

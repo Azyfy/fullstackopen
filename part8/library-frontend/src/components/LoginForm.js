@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { LOGIN } from "../quaries"
-import { useMutation } from "@apollo/client"
+import { LOGIN, USER } from "../quaries"
+import { useMutation, useLazyQuery } from "@apollo/client"
 
-const LoginForm = ({ show, setPage, setToken }) => {
+const LoginForm = ({ show, setPage, setToken, setUser }) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+
+    const [ getUser, resultUser ] = useLazyQuery(USER)
 
     const [login, result] = useMutation(LOGIN, {
         onError: (error) => {
@@ -13,9 +15,18 @@ const LoginForm = ({ show, setPage, setToken }) => {
     })
 
     useEffect(() => {
-        if (result.data) {
+        if (resultUser.data) {
+            localStorage.setItem("user", JSON.stringify(resultUser.data.me))
+            setUser(resultUser.data.me)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [resultUser])
 
+    useEffect(() => {
+        if (result.data) {
             const token = result.data.login.value
+
+            getUser()
 
             setToken(token)
             localStorage.setItem("user-token", token)

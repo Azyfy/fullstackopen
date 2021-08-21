@@ -1,19 +1,14 @@
 import React from 'react'
-import { USER } from "../quaries"
-import { useQuery } from '@apollo/client'
 
-const RecommendedBooks = ({ show, books}) => {
-
-  const resultUser = useQuery(USER)
-  resultUser.refetch()
+const RecommendedBooks = ({ show, user, books}) => {
+  
 
   if (!show) {
     return null
   }
 
-  const favoriteGenre = resultUser.data.me.favoriteGenre
+  const favoriteGenre = user.favoriteGenre
 
-  const recommendedBooks = books.filter(book => book.genres.includes(favoriteGenre))
 
   return (
     <div>
@@ -30,7 +25,7 @@ const RecommendedBooks = ({ show, books}) => {
               published
             </th>
           </tr>
-          {recommendedBooks.map(a =>
+          {books.map(a =>
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>

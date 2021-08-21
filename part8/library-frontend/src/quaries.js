@@ -76,3 +76,15 @@ export const USER = gql`
         }
     }
 `
+
+export const ALL_BOOKS_WITH = gql`
+query ($author: String, $genre: String!) {
+    allBooksWith (author: $author, genre: $genre) {
+        title
+        published
+        author {
+            name
+        }
+    }
+}
+`
