@@ -33,6 +33,7 @@ const App = () => {
 
   useEffect(() => {
     if (resultRecommended.data) {
+      resultRecommended.refetch()
       setRecommendedBooks(resultRecommended.data.allBooksWith)
     }  
   }, [resultRecommended])
