@@ -21,9 +21,24 @@ const App = () => {
 
   const [ getRecommendedBooks, resultRecommended ] = useLazyQuery(ALL_BOOKS_WITH )
 
+  const updateCacheWith = (addedBook) => {
+    const includedIn = (set, object) => set.map(b => b.id).includes(object.id)  
+  
+    const dataInStore = client.readQuery({ query: ALL_BOOKS })
+
+    if(!includedIn(dataInStore.allBooks, addedBook)) {
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: { allBooks: dataInStore.allBooks.concat(addedBook) }
+      })
+    }
+  }
+
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
-      alert(`New book added: ${subscriptionData.data.bookAdded.title}`)
+      const addedBook = subscriptionData.data.bookAdded
+      updateCacheWith(addedBook)
+      alert(`New book added: ${addedBook.title}`)
     }
   })
 
