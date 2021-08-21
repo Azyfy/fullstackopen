@@ -49,7 +49,7 @@ const App = () => {
   }
 
   const handleRecommended = () => {
-    getRecommendedBooks({ variables: { genre: "SCI-FI" } })
+    getRecommendedBooks({ variables: { genre: user.favoriteGenre } })
     setPage('recommended')
   }
 
