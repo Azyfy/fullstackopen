@@ -1,5 +1,4 @@
 const { ApolloServer, gql, UserInputError, AuthenticationError } = require('apollo-server')
-const { v1: uuid } = require('uuid')
 const mongoose = require("mongoose")
 require("dotenv").config()
 
@@ -10,6 +9,10 @@ const User = require("./models/user")
 const jwt = require("jsonwebtoken")
 
 const JWT_SECRET = process.env.SECRET_KEY
+
+
+const { PubSub } = require('graphql-subscriptions')
+const pubsub = new PubSub()
 
 
 const MONGODB_URI = process.env.MONGODB_URI
@@ -84,6 +87,10 @@ const typeDefs = gql`
       allAuthors: [Author] 
       me: User
   }
+
+  type Subscription {
+    bookAdded: Book
+  }   
 `
 /*
 The following things do not have to work just yet
@@ -156,8 +163,8 @@ const resolvers = {
               invalidArgs: args,
             })
           }
-
-            return book
+          pubsub.publish('BOOK_ADDED', { bookAdded: book })
+          return book
         },
 
         editAuthor: async (root, args, context) => {
@@ -205,7 +212,12 @@ const resolvers = {
 
             return { value: jwt.sign(userForToken, JWT_SECRET) }
           },
+    },
 
+    Subscription: {
+      bookAdded: {
+        subscribe: () => pubsub.asyncIterator(['BOOK_ADDED'])
+      }
     }
 
 }
@@ -227,6 +239,7 @@ const server = new ApolloServer({
   },
 })
 
-server.listen().then(({ url }) => {
+server.listen().then(({ url, subscriptionsUrl }) => {
   console.log(`Server ready at ${url}`)
+  console.log(`Subscriptions ready at ${subscriptionsUrl}`)
 })
