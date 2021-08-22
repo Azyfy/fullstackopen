@@ -20,4 +20,16 @@ function calculateBmi (height: number, mass: number): string {
     }
 }
 
-console.log(calculateBmi(180, 74))
+if(process.argv.length === 4) {
+    const height: number = Number(process.argv[2])
+    const mass: number = Number(process.argv[3])
+
+    if( isNaN(height) || isNaN(mass)) {
+        console.log("Wrong input. Numbers required")
+    }
+
+    console.log(calculateBmi(height, mass))
+}
+else{
+    console.log("npm run calculateBmi <height> <mass> ; replace the last two with numbers")
+}

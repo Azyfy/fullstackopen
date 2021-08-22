@@ -27,6 +27,7 @@ function calculateExercises( trainingHoursPerDay : number[], targetHours :number
     else {
         //error
         rating = 0
+        ratingDescription = "Shouldnt happen"
     }
 
     return {
@@ -40,4 +41,24 @@ function calculateExercises( trainingHoursPerDay : number[], targetHours :number
     }
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+if(process.argv.length > 4) {
+    const target: number = Number(process.argv[2])
+    const array: string[] = (process.argv.slice(3))
+    const arrayNumber: number[] = array.map(n => Number(n))
+
+    arrayNumber.forEach( n => {
+        if(isNaN(n)) {
+            console.log("Wrong input. Numbers required")
+        }
+    })
+    if(  isNaN(target)) {
+        console.log("Wrong input. Numbers required")
+    }
+
+    console.log(calculateExercises(arrayNumber, target))
+}
+else{
+    console.log("npm run calculateExercises <target training hours> <training hours per day> ; replace the last two with numbers, the second one being a list of numbers")
+}
+
+// console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
