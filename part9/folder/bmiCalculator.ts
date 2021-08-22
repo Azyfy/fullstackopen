@@ -33,3 +33,5 @@ if(process.argv.length === 4) {
 else{
     console.log("npm run calculateBmi <height> <mass> ; replace the last two with numbers")
 }
+
+export { calculateBmi }
