@@ -1,13 +1,13 @@
-import diagnosesData from "../../data/diagnoses.json"
+import diagnosesData from "../../data/diagnoses.json";
 
-import { DiagnosesEntry } from "../types"
+import { DiagnosesEntry } from "../types";
 
 const diagnoses: Array<DiagnosesEntry> = diagnosesData;
 
 const getEntries = () => {
-    return diagnoses
-}
+    return diagnoses;
+};
 
 export default {
     getEntries,
-}
+};
