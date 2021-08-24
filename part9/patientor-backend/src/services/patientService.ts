@@ -4,7 +4,7 @@ import { PatientsEntry, NewPatientEntry } from "../types";
 
 import {v1 as uuid} from 'uuid';
 
-const patients: Array<PatientsEntry> = patientsData;
+const patients: Array<PatientsEntry> = patientsData as Array<PatientsEntry>;
 
 const getEntries = () => {
     return patients;
