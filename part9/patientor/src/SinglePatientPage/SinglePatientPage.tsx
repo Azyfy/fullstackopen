@@ -6,7 +6,8 @@ import { Patient } from "../types";
 
 import SinglePatient from "../components/SinglePatient";
 
- import { useStateValue } from "../state";
+import { useStateValue } from "../state";
+import { singlePatientData } from "../state";
 
 
 const SinglePatientPage = () => {
@@ -23,7 +24,7 @@ const SinglePatientPage = () => {
             const { data: singlePatientFromApi } = await axios.get<Patient>(
               `${apiBaseUrl}/patients/${id}`
             );
-            dispatch({ type: "SET_SINGLE_PATIENT", payload: singlePatientFromApi });
+            dispatch(singlePatientData(singlePatientFromApi));
 
           } catch (e) {
             console.error(e);
