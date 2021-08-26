@@ -1,4 +1,4 @@
-import patientsData from "../../data/patients.json";
+import patientsData from "../../data/patients";
 
 import { PatientsEntry, NewPatientEntry } from "../types";
 
@@ -12,17 +12,18 @@ const getEntries = () => {
 
 const getEntriesWithoutSsn = 
 (): Omit<PatientsEntry, "ssn">[] => {
-    return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
+    return patients.map(({ id, name, dateOfBirth, gender, occupation, entries }) => ({
         id,
         name,
         dateOfBirth,
         gender,
-        occupation
+        occupation,
+        entries
     }));
 };
 
 const addPatient = 
-    ( newEntry: NewPatientEntry ): PatientsEntry => {
+    ( newEntry: NewPatientEntry ): Omit<PatientsEntry, "entries"> => {
 
         const newPatient = {
             id: uuid(),
