@@ -26,10 +26,25 @@ router.get("/:id", (req, res) => {
     if(!patient) {
         return res.json({
             error: "No patient found!"
-        })
+        });
     }
 
     return res.json(patient);
-})
+});
+
+router.post("/:id/entries", (req, res) => {
+    const entry = req.body.entry;
+    const id = req.body.patientId;
+
+    const newEntry =  patientService.addEntry(entry, id);
+
+    if (newEntry === "No patient") {
+        return res.json({
+            error: "No patient found!"
+        })
+    }
+
+    return res.json(newEntry);
+});
 
 export default router;

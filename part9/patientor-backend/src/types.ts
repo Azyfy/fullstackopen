@@ -5,9 +5,9 @@ export interface DiagnosesEntry {
 }
 
 // Define special omit for unions
-// type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 // Define Entry without the 'id' property
-// type EntryWithoutId = UnionOmit<Entry, 'id'>;
+export type EntryWithoutId = UnionOmit<Entry, 'id'>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export type Entry = | HospitalEntry
@@ -57,7 +57,7 @@ export interface PatientsEntry {
 
 // export type PublicPatient = Omit<PatientsEntry, 'ssn' | 'entries' >
 
-export type NewPatientEntry = Omit<PatientsEntry, "id" | "entries">;
+export type NewPatientEntry = Omit<PatientsEntry, "id">;
 
 export enum Gender {
     Male = "male",

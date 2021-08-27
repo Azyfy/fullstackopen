@@ -1,6 +1,6 @@
 import patientsData from "../../data/patients";
 
-import { PatientsEntry, NewPatientEntry } from "../types";
+import { PatientsEntry, NewPatientEntry, Entry, EntryWithoutId } from "../types";
 
 import {v1 as uuid} from 'uuid';
 
@@ -27,7 +27,8 @@ const addPatient =
 
         const newPatient = {
             id: uuid(),
-            ...newEntry
+            ...newEntry,
+            entries: []
         };
 
         patients.push(newPatient);
@@ -35,8 +36,27 @@ const addPatient =
 
     };
 
+const addEntry = ( newData: EntryWithoutId, id: string ): Entry | string => {
+
+    const patient = patients.find(patient => patient.id === id);
+
+    const newEntry = {
+        id: uuid(),
+        ...newData
+    }
+
+    if(!patient) {
+        return "No patient"
+    }
+ 
+    patient?.entries!.push(newEntry);
+
+    return newEntry;
+}
+
 export default {
     getEntries,
     getEntriesWithoutSsn,
-    addPatient
+    addPatient,
+    addEntry
 };
