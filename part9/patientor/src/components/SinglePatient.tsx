@@ -1,18 +1,22 @@
 import React from 'react';
 import Diagnosis from './Diagnosis';
+import EntryComponent from '../components/EntryComponent';
 
 import {  Header, Container } from "semantic-ui-react";
 import { Entry, Patient } from '../types';
+
+import { Icon } from 'semantic-ui-react';
 
 const SinglePatient = ({ patient }: {patient: Patient}) => {
 
     return(
         <Container>
             <Header as="h2">
-                {patient.name} 
+                {patient.name} {(patient.gender ==="male")? 
+                            <Icon name="mars" />    
+                            : <Icon name="venus" /> }
             </Header>
             <Container>
-                <p>{patient.name} </p>
                 <p>{patient.ssn} </p>
                 <p>{patient.occupation} </p>
                 <Container>
@@ -23,8 +27,8 @@ const SinglePatient = ({ patient }: {patient: Patient}) => {
                             <Container>
                             { patient.entries.map((entry: Entry) => {
                                 return(
-                                    <Container key={entry.id}>
-                                        <p> { entry.date } { entry.description } </p>
+                                    <Container key={entry.id} style={{border: "1px solid grey", padding: "10px", borderRadius: "5px", marginBottom: "10px"}}>
+                                        <EntryComponent entry={entry} />
                                         {(entry.diagnosisCodes) ?
                                         <ul>
                                         { entry.diagnosisCodes.map(code => {
