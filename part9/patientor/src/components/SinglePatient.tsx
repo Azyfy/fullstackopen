@@ -1,4 +1,5 @@
 import React from 'react';
+import Diagnosis from './Diagnosis';
 
 import {  Header, Container } from "semantic-ui-react";
 import { Entry, Patient } from '../types';
@@ -28,7 +29,9 @@ const SinglePatient = ({ patient }: {patient: Patient}) => {
                                         <ul>
                                         { entry.diagnosisCodes.map(code => {
                                             return (
-                                                <li key={code} >{code}</li>
+                                                <li key={code} >{code}  
+                                                    <Diagnosis code={code} />
+                                                </li>
                                             );
                                         }) }
                                         </ul> 
