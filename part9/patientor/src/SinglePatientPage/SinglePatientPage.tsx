@@ -15,12 +15,10 @@ const SinglePatientPage = () => {
 
   const [{ patient } , dispatch] = useStateValue();
 
-    
     React.useEffect(() => {
 
         const fetchSinglePatient = async () => {
         try {
-            console.log("fetch");
             const { data: singlePatientFromApi } = await axios.get<Patient>(
               `${apiBaseUrl}/patients/${id}`
             );
