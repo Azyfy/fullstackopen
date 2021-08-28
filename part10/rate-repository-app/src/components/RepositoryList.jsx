@@ -64,7 +64,7 @@ const RepositoryList = () => {
         return (
             <RepositoryItem item={item} />
       );
-        }
+        };
 
 
   return (

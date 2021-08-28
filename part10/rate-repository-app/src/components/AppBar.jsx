@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Pressable, Text } from 'react-native';
 import Constants from 'expo-constants';
 
-import theme from "../theme.js"
+import theme from "../theme.js";
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +26,7 @@ const AppBar = () => {
             <Text style={styles.text} >Repositories</Text>
         </Pressable>
     </View>
-  )
+  );
 };
 
 export default AppBar;
