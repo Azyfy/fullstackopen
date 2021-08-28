@@ -13,3 +13,4 @@
 | 7 | React router, custom hooks, styling app with CSS and webpack |
 | 8 | GraphQL |
 | 9 | TypeScript |
+| 10 | React Native |
