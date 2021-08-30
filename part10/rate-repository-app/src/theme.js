@@ -4,6 +4,7 @@ const theme = {
         textSecondary: '#586069',
         primary: '#0366d6',
         textNav: "white",
+        error: "#d73a4a",
         background: "#24292e",
         backgroundMain: "#e1e4e8",
     },
