@@ -52,11 +52,23 @@ const RepositoryItem = ({ item }) => {
                     <Text style={styles.languageContainer}> {item.language}</Text>
                 </View>
             </View>
-            <View style={{flexDirection:"row", gap: 9, flexWrap:"wrap"}}>
-                <Text >Stars: {starsCount}</Text>
-                <Text >Forks: {forksCount}</Text>
-                <Text >Reviews: {reviewCount}</Text>
-                <Text >Rating: {item.ratingAverage}</Text>
+            <View style={{flexDirection:"row", gap: 11, flexWrap:"wrap"}}>
+                <View style={{flexDirection:"column", flexWrap:"wrap"}} >
+                    <Text >{starsCount}</Text>
+                    <Text style={{color: "grey"}} >Stars</Text>
+                </View>
+                <View style={{flexDirection:"column", flexWrap:"wrap"}} >
+                    <Text >{forksCount}</Text>
+                    <Text style={{color: "grey"}} >Forks</Text>
+                </View>
+                <View style={{flexDirection:"column", flexWrap:"wrap"}} >
+                    <Text >{reviewCount}</Text>
+                    <Text style={{color: "grey"}} >Reviews</Text>
+                </View>
+                <View style={{flexDirection:"column", flexWrap:"wrap"}} >
+                    <Text >{item.ratingAverage}</Text>
+                    <Text style={{color: "grey"}} >Rating</Text>
+                </View>
             </View>
         </View>
     );

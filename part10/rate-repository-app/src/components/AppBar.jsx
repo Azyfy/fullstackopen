@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
       color: theme.colors.textNav,
       fontSize: theme.fontSizes.nav,
   },
+  nav: {
+    padding: 11,
+  }
 });
 
 const AppBar = () => {
@@ -22,11 +25,11 @@ const AppBar = () => {
     <View style={styles.container}>
       <ScrollView horizontal >
         <Pressable >
-          <Link to="/"> 
+          <Link to="/" style={styles.nav} > 
             <Text style={styles.text} >Repositories</Text>
           </Link>
         </Pressable>
-        <Link to="/signin">
+        <Link to="/signin" style={styles.nav} >
           <Text style={styles.text} >Sign In</Text>
         </Link>
         
