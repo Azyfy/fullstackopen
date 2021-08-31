@@ -1,12 +1,19 @@
 import React from 'react';
 
-import Main from './src/components/Main.jsx';
 import { NativeRouter } from 'react-router-native';
+import { ApolloProvider } from '@apollo/client';
+
+import Main from './src/components/Main.jsx';
+import createApolloClient from './src/utils/apolloClient.js';
+
+const apolloClient = createApolloClient();
 
 const App = () => {
   return (
     <NativeRouter>
-      <Main />
+      <ApolloProvider client={apolloClient} >
+        <Main />
+      </ApolloProvider>
     </NativeRouter>
   );
 };

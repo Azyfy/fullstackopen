@@ -1,14 +1,17 @@
 import React from 'react';
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, Text } from 'react-native';
+import { useQuery } from '@apollo/client';
 
 import RepositoryItem from './RepositoryItem.jsx';
+import { GET_REPOSITORIES } from '../graphql/queries.js';
+
 
 const styles = StyleSheet.create({
   separator: {
     height: 10,
   },
 });
-
+/*
 const repositories = [
   {
     id: 'jaredpalmer.formik',
@@ -55,16 +58,31 @@ const repositories = [
     ownerAvatarUrl: 'https://avatars3.githubusercontent.com/u/13142323?v=4',
   },
 ];
-
+*/
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
 
-    const renderItem = ({ item }) => {
-        return (
-            <RepositoryItem item={item} />
+  const { data, error, loading } = useQuery(GET_REPOSITORIES, { 
+    fetchPolicy: 'cache-and-network',
+  });
+
+  if(loading) {
+    return (
+      <View>
+        <Text> Loading </Text>
+      </View>
+    )
+  }
+
+  const repositories = data.repositories.edges.map(edge => edge.node)
+
+
+  const renderItem = ({ item }) => {
+      return (
+          <RepositoryItem item={item} />
       );
-        };
+    };
 
 
   return (
