@@ -5,6 +5,8 @@ import { Formik } from 'formik';
 import FormikTextInput from './FormikTextInput';
 import * as yup from 'yup';
 
+import useSignIn from '../hooks/useSignIn';
+
 import theme from '../theme';
 
 const initialValues = {
@@ -32,9 +34,20 @@ const styles = StyleSheet.create({
   });
 
 const SignIn = () => {
+    const [signIn] = useSignIn();
 
-    const onSubmit = (values) => {
+    const onSubmit = async (values) => {
         console.log("LOG", values);
+
+        const { username, password } = values;
+
+        try {
+          const { data } = await signIn({ username, password });
+          console.log("DATA", data);
+        } catch (e) {
+          console.log("ERROR!", e);
+        }
+
       };
 
   return (

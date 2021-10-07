@@ -74,6 +74,13 @@ const RepositoryList = () => {
       </View>
     )
   }
+  if(error) {
+    return (
+      <View>
+        <Text> Error </Text>
+      </View>
+    )
+  }
 
   const repositories = data.repositories.edges.map(edge => edge.node)
 
