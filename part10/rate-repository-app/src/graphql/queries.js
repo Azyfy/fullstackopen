@@ -19,3 +19,12 @@ query {
     }
   }
 `;
+
+export const GET_AUTHORIZATION = gql`
+  query {
+    authorizedUser {
+      id
+      username
+    }
+  }
+`;
