@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Text, View, Pressable, StyleSheet } from 'react-native';
+import { useHistory } from "react-router-dom";
 import { Formik } from 'formik';
 import FormikTextInput from './FormikTextInput';
 import * as yup from 'yup';
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
 
 const SignIn = () => {
     const [signIn] = useSignIn();
+    let history = useHistory();
 
     const onSubmit = async (values) => {
         console.log("LOG", values);
@@ -44,6 +46,7 @@ const SignIn = () => {
         try {
           const { data } = await signIn({ username, password });
           console.log("DATA", data);
+          history.push("/home")
         } catch (e) {
           console.log("ERROR!", e);
         }
