@@ -14,3 +14,4 @@
 | 8 | GraphQL |
 | 9 | TypeScript |
 | 10 | React Native |
+| 11 | CI/CD |
